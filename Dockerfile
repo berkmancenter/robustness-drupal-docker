@@ -3,7 +3,7 @@
 # VERSION       0.2
 # DOCKER-VERSION        0.4
 FROM    ubuntu:latest
-MAINTAINER Ricardo Amaro <mail@ricardoamaro.com>
+MAINTAINER Jeffrey Licht <jeff@podconsulting.com.com>
 
 RUN apt-get update
 
