@@ -1,10 +1,9 @@
 robustness-drupal-docker 
 ========================
 
-This repo contains a recipe for making a [Docker](http://docker.io) container for Drupal, using Linux, Apache and MySQL. 
-To build, make sure you have Docker [installed](http://www.docker.io/gettingstarted/).
+This repo contains a recipe for making a [Docker](http://docker.io) container for Drupal, with the Internet Robustness plugin installed.
 
-This will try to go in line with [Drupal automated-testing](https://drupal.org/automated-testing).
+To build, make sure you have Docker [installed](http://www.docker.io/gettingstarted/).
 
 ## kill any running docker daemon
 ```
@@ -17,30 +16,25 @@ curl get.docker.io | sudo sh -x
 
 ## Clone this repo somewhere, 
 ```
-git clone https://github.com/ricardoamaro/docker-drupal.git
-cd docker-drupal
+git clone https://github.com/berkmancenter/robustness-drupal-docker.git
+cd robustness-drupal-docker
 ```
 and then build it:
 ```
-sudo docker build -t <yourname>/drupal .
+sudo docker build -t <yourname>/robustness-drupal .
 ```
 
 this can take a while but should eventually return a command prompt. It's done when it says "Successfully built {hash}"
 
 ## And run the container, connecting port 80:
 ```
-sudo docker run -d -t -p 80:80 <yourname>/drupal
+sudo docker run -d -t -p 80:80 <yourname>/robustness-drupal
 ```
 That's it!
 Visit http://localhost/ in your webrowser. 
 
 Note: you cannot have port 80 already used or the container will not start.
 In that case you can start by setting: `-p 8080:80`
-
-build directly from github is broken at the moment:
-```
-sudo docker build -t <yourname>/drupal git://github.com/ricardoamaro/docker-drupal.git
-```
 
 
 ### Credentials
@@ -50,63 +44,9 @@ sudo docker build -t <yourname>/drupal git://github.com/ricardoamaro/docker-drup
 * Drupal account-name=admin & account-pass=admin
 
 
-## More docker awesomeness
-
-This will create an ID that you can start/stop/commit changes:
-```
-# sudo docker ps
-ID                  IMAGE                   COMMAND               CREATED             STATUS              PORTS
-538114c20d36        <yourname>/drupal:latest   /bin/bash /start.sh   3 minutes ago       Up 6 seconds        80->80  
-```
-
-Start/Stop
-```
-sudo docker stop 538114c20d36
-sudo docker start 538114c20d36
-```
-
-Commit the actual state to the image
-```
-sudo docker commit 538114c20d36 <yourname>/drupal
-```
-
-Starting again with the commited changes
-```
-sudo docker run -d -t -p 80:80 <yourname>/drupal /start.sh
-```
-
-Shipping the container image elsewhere 
-```
-sudo docker push  <yourname>/drupal
-```
-
-You can find more images using the [Docker Index][docker_index].
-
-ricardoamaro/drupal-lamp
-
-### Clean up
-While i am developing i use this to rm all old instances
-```
-sudo docker ps -a | awk '{print $1}' | grep -v CONTAINER | xargs -n1 -I {} docker rm {}
-``` 
-
-### Known Issues
-* Upstart on Docker is broken due to [this issue][docker_upstart_issue], and that's one of the reasons the image is puppetized using vagrant.
-* Warning: This is still in development and ports shouldn't be open to the outside world.
-
-
-## Contributing
-Feel free to fork and contribute to this code. :)
-
-1. Fork the repo
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
-
 ## Authors
 
-Created and maintained by [Ricardo Amaro][author] (<mail@ricardoamaro.com>)
+Based on docker-drupal, created and maintained by [Ricardo Amaro][author] (<mail@ricardoamaro.com>)
 
 ## License
 GPL v3
