@@ -19,6 +19,10 @@ if [ ! -f /var/www/sites/default/settings.php ]; then
 	cd /var/www/
 	drush site-install standard -y --account-name=admin --account-pass=admin --db-url="mysqli://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal"     
 	drush en cayl -y
+	# Install the CAYL filter for the full_html and filtered_html text formats
+	mysql -uroot -p$MYSQL_PASSWORD -D drupal -e "INSERT INTO filter (format, module, name, weight, status, settings) VALUES ('full_html', 'cayl', 'filter_cayl', 50, 1, X'613A303A7B7D');"
+	mysql -uroot -p$MYSQL_PASSWORD -D drupal -e "INSERT INTO filter (format, module, name, weight, status, settings) VALUES ('filtered_html', 'cayl', 'filter_cayl', 50, 1, X'613A303A7B7D');"
+  drush cc all -y
 	killall mysqld
 	sleep 10s
 fi

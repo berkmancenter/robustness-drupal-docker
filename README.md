@@ -28,7 +28,7 @@ this can take a while but should eventually return a command prompt. It's done w
 
 ## And run the container, connecting port 80:
 ```
-sudo docker run -d -t -p 80:80 <yourname>/robustness-drupal
+sudo docker run -d -t --dns=8.8.8.8 -p 80:80 <yourname>/robustness-drupal /start.sh
 ```
 That's it!
 Visit http://localhost/ in your webrowser. 
